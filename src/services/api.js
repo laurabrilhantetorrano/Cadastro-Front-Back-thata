@@ -14,7 +14,7 @@
 //
 // ═══════════════════════════════════════════════════════════════════════
 
-import { API_URL } from "../config";
+import { https://mongodb-gu-ma6m.vercel.app } from "../config";
 
 // ═══════════════════════════════════════════════════════════════════════
 //  ROTAS DISPONÍVEIS NO BACKEND  (sua "cola" — consulte o tempo todo)
@@ -109,7 +109,7 @@ export async function login(email, senha) {
 //     Sua mensagem tem que aparecer em vermelho na tela.
 //
 export async function cadastrar(nome, email, senha) {
-  const resposta = await fetch(`${API_URL}/api/usuarios/cadastrar`, {
+  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios/cadastrar`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -159,7 +159,7 @@ export async function cadastrar(nome, email, senha) {
 //  🧪 Teste o erro: apague uma letra do token antes de mandar e veja o 401.
 //
 export async function listarUsuarios(token) {
-  const resposta = await fetch(`${API_URL}/api/usuarios`, {
+  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
