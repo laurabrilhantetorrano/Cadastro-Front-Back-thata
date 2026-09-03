@@ -49,7 +49,7 @@ export async function login(email, senha) {
   // 1) DISPARA o pedido e ESPERA a resposta chegar.
   //    `await` = "segura aqui até voltar". Sem ele você recebe uma
   //    Promise (uma promessa), não os dados.
-  const resposta = await fetch(`${API_URL}/api/usuarios/login`, {
+  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios/login`, {
     // 2) O MÉTODO diz a INTENÇÃO do pedido:
     //    GET = ler | POST = criar | PUT = atualizar | DELETE = apagar
     method: "POST",
