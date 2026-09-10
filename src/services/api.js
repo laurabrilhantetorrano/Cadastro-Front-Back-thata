@@ -14,7 +14,7 @@
 //
 // ═══════════════════════════════════════════════════════════════════════
 
-import { https://mongodb-gu-ma6m.vercel.app } from "../config";
+import { API_URL } from "../config";
 
 // ═══════════════════════════════════════════════════════════════════════
 //  ROTAS DISPONÍVEIS NO BACKEND  (sua "cola" — consulte o tempo todo)
@@ -49,7 +49,7 @@ export async function login(email, senha) {
   // 1) DISPARA o pedido e ESPERA a resposta chegar.
   //    `await` = "segura aqui até voltar". Sem ele você recebe uma
   //    Promise (uma promessa), não os dados.
-  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios/login`, {
+  const resposta = await fetch(`${API_URL}/api/usuarios/login`, {
     // 2) O MÉTODO diz a INTENÇÃO do pedido:
     //    GET = ler | POST = criar | PUT = atualizar | DELETE = apagar
     method: "POST",
@@ -109,11 +109,9 @@ export async function login(email, senha) {
 //     Sua mensagem tem que aparecer em vermelho na tela.
 //
 export async function cadastrar(nome, email, senha) {
-  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios/cadastrar`, {
+  const resposta = await fetch(`${API_URL}/api/usuarios/cadastrar`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, email, senha }),
   });
 
@@ -123,8 +121,9 @@ export async function cadastrar(nome, email, senha) {
     throw new Error(dados.mensagem || "Não foi possível criar a conta.");
   }
 
-  return dados;
+  return dados; // { sucesso, mensagem, token, usuario }
 }
+
 
 // ╔═════════════════════════════════════════════════════════════════════╗
 // ║                                                                     ║
@@ -159,7 +158,7 @@ export async function cadastrar(nome, email, senha) {
 //  🧪 Teste o erro: apague uma letra do token antes de mandar e veja o 401.
 //
 export async function listarUsuarios(token) {
-  const resposta = await fetch(`${https://mongodb-gu-ma6m.vercel.app}/api/usuarios`, {
+  const resposta = await fetch(`${API_URL}/api/usuarios`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -204,8 +203,19 @@ export async function listarUsuarios(token) {
 //     no formulário? (Resposta: o componente pai recarregou a lista.)
 //
 export async function editarPerfil(token, nome, email) {
-  // ↓↓↓ APAGUE ESTA LINHA E ESCREVA SEU CÓDIGO ↓↓↓
-  throw new Error("🚧 TAREFA 3 ainda não foi implementada (src/services/api.js)");
+  const resposta = await fetch(`${API_URL}/api/usuarios/editar`, {
+  method: "PUT",
+  headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ nome, email }),
+});
+const dados = await resposta.json();
+if (!resposta.ok) {
+throw new Error(dados.mensagem || "Não foi possível salvar.");
+}
+ return dados;
 }
 
 // ╔═════════════════════════════════════════════════════════════════════╗
@@ -235,7 +245,14 @@ export async function editarPerfil(token, nome, email) {
 //     histórico e obedecer a lei. Quando você "exclui" sua conta numa rede
 //     social, quase sempre é isso que acontece.
 //
-export async function desativarConta(token) {
-  // ↓↓↓ APAGUE ESTA LINHA E ESCREVA SEU CÓDIGO ↓↓↓
-  throw new Error("🚧 TAREFA 4 ainda não foi implementada (src/services/api.js)");
+  export async function desativarConta(token) {
+  const resposta = await fetch(`${API_URL}/api/usuarios/desativar`, {
+  method: "DELETE",
+headers: { Authorization: `Bearer ${token}` },
+});
+const dados = await resposta.json();
+if (!resposta.ok) {
+throw new Error(dados.mensagem || "Não foi possível desativar a conta.");
+}
+return dados;
 }
